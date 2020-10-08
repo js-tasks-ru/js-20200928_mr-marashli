@@ -5,24 +5,18 @@
  * @returns {string[]}
  */
 export function sortStrings(arr, param = 'asc') {
-  if (param === 'asc') {
-    return [...arr].sort(ascSort);
+  switch (param) {
+  case 'asc':
+    return makeSort(1, arr);
+  case 'desc':
+    return makeSort(-1, arr);
+  default:
+    return arr;
   }
-  else if (param === 'desc') {
-    return [...arr].sort(ascSort).reverse();
-  }
-
 }
 
-function ascSort(a, b) {
-  const compareResult = a.localeCompare(b, 'default', {caseFirst: "upper"});
-  if (compareResult === 1) {
-    return 1;
-  }
-  if (compareResult === -1) {
-    return -1;
-  } 
-  if (compareResult === 0) {
-    return 0;
-  }
+function makeSort(direction, arr) {
+  const sortedArr = [...arr].sort((a, b) => 
+    direction * a.localeCompare(b, ['ru', 'en'], {caseFirst: "upper"}));
+  return sortedArr;
 }

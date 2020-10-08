@@ -6,12 +6,10 @@
  */
 export const omit = (obj, ...fields) => {
   const newObj = {};
-  const objKeys = Object.keys(obj);
-
-  const omitedKeys = objKeys.filter(item => fields.indexOf(item) == -1);
-
-  for (const key of omitedKeys) {
-    newObj[key] = obj[key];
+  for (const [key, value] of Object.entries(obj)) {
+    if (!fields.includes(key)) {
+      newObj[key] = value;
+    }
   }
   return newObj;
 };
